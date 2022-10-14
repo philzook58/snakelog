@@ -35,7 +35,7 @@ def validate(name):
     return re.fullmatch("[_a-zA-Z][_a-zA-Z0-9]*", name) != None
 
 
-class Solver():
+class Solver(BaseSolver):
     def __init__(self, debug=False, database=":memory:"):
         self.con = sqlite3.connect(
             database=database, detect_types=sqlite3.PARSE_DECLTYPES)
@@ -78,11 +78,6 @@ class Solver():
             assert self.rels[name] == types
         return lambda *args: Atom(name, args)
 
-    def add_rule(self, head, body):
-        self.rules.append((head, body))
-
-    def add_fact(self, fact: Atom):
-        self.add_rule(fact, [])
 
     def compile(self, head, body, naive=False):
         assert isinstance(head, Atom)

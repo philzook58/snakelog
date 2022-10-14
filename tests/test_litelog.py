@@ -30,6 +30,20 @@ def test_edge():
     s.cur.execute("SELECT * FROM nopath")
     assert set(s.cur.fetchall()) == ans
 
+def test_notation():
+    s = Solver()
+    x, y, z = Vars("x y z")
+    edge = s.Relation("edge", INTEGER, INTEGER)
+    path = s.Relation("path", INTEGER, INTEGER)
+    s.add(edge(1,2))
+    s.add(edge(2,3))
+    s.add(path(x,y) <= edge(x,y))
+    s.add(path(x,z) <= edge(x,y) & path(y,z))
+    s.run()
+    s.cur.execute("SELECT * FROM path")
+    assert set(s.cur.fetchall()) == {(1,2), (2,3), (1,3)}
+
+
 def jsonit(x):
     return json.dumps(x, separators=(',', ':') )
 
