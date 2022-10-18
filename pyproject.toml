@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "alitssaas"
+name = "snakelog"
 version = "0.1.0"
 description = ""
 authors = ["Philip Zucker <philzook58@gmail.com>"]

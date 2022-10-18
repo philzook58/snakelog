@@ -1,10 +1,12 @@
 from typing import Any, List
 from dataclasses import dataclass
 
+
 @dataclass(frozen=True)
 class Term():
-    f:str
-    args:List[Any]
+    name: str
+    args: List[Any]
+
 
 @dataclass(frozen=True)
 class Var:
@@ -12,8 +14,9 @@ class Var:
 
     def __eq__(self, rhs):
         return Eq(self, rhs)
-    def __add__(self,rhs):
-        return Term("+", [self,rhs])
+
+    def __add__(self, rhs):
+        return Term("+", [self, rhs])
 
 
 @dataclass(frozen=True)
@@ -40,6 +43,14 @@ def Vars(xs):
     return [Var(x) for x in xs.split()]
 
 
+@dataclass(frozen=True)
+class QuasiQuote:
+    expr: str
+
+
+Q = QuasiQuote
+
+
 @dataclass
 class Atom:
     name: str
@@ -49,9 +60,9 @@ class Atom:
         args = ",".join(map(repr, self.args))
         return f"{self.name}({args})"
 
-    def __and__(self,rhs):
+    def __and__(self, rhs):
         if isinstance(rhs, Atom):
-            return Body([self ,rhs])
+            return Body([self, rhs])
         elif isinstance(rhs, Body):
             return Body([self] + rhs)
         else:
@@ -62,13 +73,15 @@ class Atom:
             b = Body([rhs])
             return Clause(self, b)
         elif isinstance(rhs, Body):
-            return Clause(self,rhs)
+            return Clause(self, rhs)
         else:
             raise Exception(f"{self} <= {rhs} is invalid")
+
 
 @dataclass
 class Body:
     atoms: List[Atom]
+
     def __and__(self, rhs):
         if isinstance(rhs, Atom):
             return Body(self + [rhs])
@@ -78,11 +91,11 @@ class Body:
             raise Exception(f"{self} & {rhs} is invalid")
 
 
-
 @dataclass
 class Clause:
     head: Atom
     body: Body
+
 
 class BaseSolver():
     def add_rule(self, head, body):

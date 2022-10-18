@@ -1,6 +1,7 @@
-from alitssaas import *
-from alitssaas.litelog import *
+from snakelog import *
+from snakelog.litelog import *
 import json
+
 
 def test_edge():
     s = Solver()
@@ -22,34 +23,39 @@ def test_edge():
 
     s.run()
 
-    ans = {(i,j) for i in range(N+1) for j in range(N+1) if i < j}
+    ans = {(i, j) for i in range(N+1) for j in range(N+1) if i < j}
     s.cur.execute("SELECT * FROM path")
     assert set(s.cur.fetchall()) == ans
 
-    ans = {(i,j) for i in range(N+1) for j in range(N+1)} - ans
+    ans = {(i, j) for i in range(N+1) for j in range(N+1)} - ans
     s.cur.execute("SELECT * FROM nopath")
     assert set(s.cur.fetchall()) == ans
+
 
 def test_notation():
     s = Solver()
     x, y, z = Vars("x y z")
     edge = s.Relation("edge", INTEGER, INTEGER)
     path = s.Relation("path", INTEGER, INTEGER)
-    s.add(edge(1,2))
-    s.add(edge(2,3))
-    s.add(path(x,y) <= edge(x,y))
-    s.add(path(x,z) <= edge(x,y) & path(y,z))
+    s.add(edge(1, 2))
+    s.add(edge(2, 3))
+    s.add(path(x, y) <= edge(x, y))
+    s.add(path(x, z) <= edge(x, y) & path(y, z))
     s.run()
     s.cur.execute("SELECT * FROM path")
-    assert set(s.cur.fetchall()) == {(1,2), (2,3), (1,3)}
+    assert set(s.cur.fetchall()) == {(1, 2), (2, 3), (1, 3)}
 
 
 def jsonit(x):
-    return json.dumps(x, separators=(',', ':') )
+    return json.dumps(x, separators=(',', ':'))
+
 
 def succ(x):
     return {"succ": x}
-zero = {"zero": None} #, separators=(',', ':'))  # "{\"zero\":null}"
+
+
+zero = {"zero": None}  # , separators=(',', ':'))  # "{\"zero\":null}"
+
 
 def test_succ_build():
     x, n = Vars("x n")
@@ -62,9 +68,10 @@ def test_succ_build():
     s.run()
     s.cur.execute("SELECT * FROM nats")
     assert set(s.cur.fetchall()) == {(jsonit(zero), 0),
-        (jsonit(succ(zero)), 1),
-        (jsonit(succ(succ(zero))), 2),
-        (jsonit(succ(succ(succ(zero)))), 3)}
+                                     (jsonit(succ(zero)), 1),
+                                     (jsonit(succ(succ(zero))), 2),
+                                     (jsonit(succ(succ(succ(zero)))), 3)}
+
 
 def test_succ2():
     s = Solver()
@@ -76,5 +83,5 @@ def test_succ2():
     s.run()
     s.cur.execute("SELECT * FROM nats")
     assert set(s.cur.fetchall()) == {(jsonit(zero),),
-        (jsonit(succ(zero)),),
-        (jsonit(succ(succ(zero))),)}
+                                     (jsonit(succ(zero)),),
+                                     (jsonit(succ(succ(zero))),)}
