@@ -278,16 +278,28 @@ class Solver(BaseSolver):
             assert self.rels[name] == types
         return lambda *args: Atom(name, args)
 
-        '''
-        def provenance(self, fact, timestamp):
-            def match_head():
-                for rule in self.rules:
-                    if rule.head.name != fact.name:
-                        continue
-                    [Eq(a, b) for a, b in zip(rule.head.args, fact.args)]
-                    wheres = [f"{.timestamp} < :timestamp"]
-                    "SELECT * FROM {body}"
-        '''
+    '''
+    def provenance(self, fact, timestamp):
+        def match_head():
+            for rule in self.rules:
+                if rule.head.name != fact.name:
+                    continue
+                query = [Eq(a, b) for a, b in zip(
+                    rule.head.args, fact.args)] + rule.body
+                varmap, constants, froms, wheres = compile_query(query)
+                froms = [f"datalite_old_{frum}"for frum in froms]
+                wheres.append(f"{row.timestamp} < :timestamp")
+                constants["timestamp"] = timestamp
+                f"SELECT {varmap.values()} {froms}{wheres}"
+                res = self.con.fetchone()
+                if res != None:
+                    for rel in body:
+                        match_head(
+                            Atom(rel.name, [res[arg] for arg in rel.args]))
+                    return proof
+            raise BaseException(
+                f"No rules applied to dervation of {fact}, {timestamp}")
+                '''
 
     def stratify(self):
         G = nx.DiGraph()
