@@ -46,6 +46,47 @@ def test_notation():
     assert set(s.cur.fetchall()) == {(1, 2), (2, 3), (1, 3)}
 
 
+def test_string():
+    s = Solver()
+    x, y, z = Vars("x y z")
+    edge = s.Relation("edge", TEXT, TEXT)
+    path = s.Relation("path", TEXT, TEXT)
+    s.add(edge("a", "b"))
+    s.add(edge("b", "c"))
+    s.add(path(x, y) <= edge(x, y))
+    s.add(path(x, z) <= edge(x, y) & path(y, z))
+    s.run()
+    s.cur.execute("SELECT * FROM path")
+    assert set(s.cur.fetchall()) == {("a", "b"), ("b", "c"), ("a", "c")}
+
+
+def test_unify():
+    s = Solver(debug=True)
+    x, y, z = Vars("x y z")
+    test = s.Relation("test", INTEGER)
+    s.add_rule(test(x), [x == y, y == z, z == 2])
+    s.add(test(x) <= (x == y) & (y == z) & (z == 2) & (x == 1))
+    s.run()
+    s.cur.execute("SELECT * from test")
+    assert set(s.cur.fetchall()) == {(2,)}
+
+
+def test_unify2():
+    s = Solver()
+    x, y, z, w = Vars("x y z w")
+    edge = s.Relation("edge", INTEGER, INTEGER)
+    path = s.Relation("path", INTEGER, INTEGER)
+    s.add(edge(1, 2))
+    s.add(edge(2, 3))
+    s.add(path(x, y) <= edge(x, y))
+    s.add(path(x, z) <= edge(x, w) & path(y, z) & (w == y))
+    s.run()
+    s.cur.execute("SELECT * FROM path")
+    assert set(s.cur.fetchall()) == {(1, 2), (2, 3), (1, 3)}
+
+# todo: test Q functionality
+
+
 def jsonit(x):
     return json.dumps(x, separators=(',', ':'))
 

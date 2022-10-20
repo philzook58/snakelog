@@ -19,14 +19,33 @@ class Var:
         return Term("+", [self, rhs])
 
 
+class BaseAtom():
+    def __and__(self, rhs):
+        if isinstance(rhs, BaseAtom):
+            return Body([self, rhs])
+        elif isinstance(rhs, Body):
+            return Body([self] + rhs)
+        else:
+            raise Exception(f"{self} & {rhs} is invalid")
+
+    def __le__(self, rhs):
+        if isinstance(rhs, BaseAtom):
+            b = Body([rhs])
+            return Clause(self, b)
+        elif isinstance(rhs, Body):
+            return Clause(self, rhs)
+        else:
+            raise Exception(f"{self} <= {rhs} is invalid")
+
+
 @dataclass(frozen=True)
-class Eq:
+class Eq(BaseAtom):
     lhs: Any
     rhs: Any
 
 
 @dataclass
-class Not:
+class Not(BaseAtom):
     val: Any
 
 
@@ -52,7 +71,7 @@ Q = QuasiQuote
 
 
 @dataclass
-class Atom:
+class Atom(BaseAtom):
     name: str
     args: List[Any]
 
@@ -60,33 +79,16 @@ class Atom:
         args = ",".join(map(repr, self.args))
         return f"{self.name}({args})"
 
-    def __and__(self, rhs):
-        if isinstance(rhs, Atom):
-            return Body([self, rhs])
-        elif isinstance(rhs, Body):
-            return Body([self] + rhs)
-        else:
-            raise Exception(f"{self} & {rhs} is invalid")
-
-    def __le__(self, rhs):
-        if isinstance(rhs, Atom):
-            b = Body([rhs])
-            return Clause(self, b)
-        elif isinstance(rhs, Body):
-            return Clause(self, rhs)
-        else:
-            raise Exception(f"{self} <= {rhs} is invalid")
-
 
 @dataclass
 class Body:
     atoms: List[Atom]
 
     def __and__(self, rhs):
-        if isinstance(rhs, Atom):
-            return Body(self + [rhs])
+        if isinstance(rhs, BaseAtom):
+            return Body(self.atoms + [rhs])
         elif isinstance(rhs, Body):
-            return Body(self + rhs)
+            return Body(self.atoms + rhs)
         else:
             raise Exception(f"{self} & {rhs} is invalid")
 

@@ -19,7 +19,7 @@ def test_edge():
     assert set(res.fetchall()) == {(1, 2), (2, 3), (1, 3)}
 
 
-def test_list():
+def disable_test_list():
     s = SouffleSolver(output_db="listtest.db")
     lists = s.Relation("lists", "term")
     cons = s.Function("Cons", "number", "term")
