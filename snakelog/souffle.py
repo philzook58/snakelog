@@ -48,7 +48,6 @@ class SouffleSolver(BaseSolver):
 
     def run(self):
         stmts = []
-        # .type json = {} |
         for name, types in self.rels:
             args = ", ".join([f"x{n} : {typ}" for n, typ in enumerate(types)])
             stmts.append(f".decl {name}({args})")

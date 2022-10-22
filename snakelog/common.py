@@ -1,11 +1,6 @@
+from __future__ import annotations
 from typing import Any, List
 from dataclasses import dataclass
-
-
-@dataclass(frozen=True)
-class Term():
-    name: str
-    args: List[Any]
 
 
 @dataclass(frozen=True)
@@ -18,10 +13,23 @@ class Var:
     def __add__(self, rhs):
         return Term("+", [self, rhs])
 
+    def __str__(self):
+        return self.name
 
-class BaseAtom():
+
+def Vars(xs):
+    return [Var(x) for x in xs.split()]
+
+
+@dataclass(frozen=True)
+class Term():
+    name: str
+    args: List[Any]
+
+
+class Formula():
     def __and__(self, rhs):
-        if isinstance(rhs, BaseAtom):
+        if isinstance(rhs, Formula):
             return Body([self, rhs])
         elif isinstance(rhs, Body):
             return Body([self] + rhs)
@@ -29,7 +37,7 @@ class BaseAtom():
             raise Exception(f"{self} & {rhs} is invalid")
 
     def __le__(self, rhs):
-        if isinstance(rhs, BaseAtom):
+        if isinstance(rhs, Formula):
             b = Body([rhs])
             return Clause(self, b)
         elif isinstance(rhs, Body):
@@ -39,13 +47,16 @@ class BaseAtom():
 
 
 @dataclass(frozen=True)
-class Eq(BaseAtom):
+class Eq(Formula):
     lhs: Any
     rhs: Any
 
+    def __str__(self):
+        return f"{repr(self.lhs)} = {repr(self.rhs)}"
+
 
 @dataclass
-class Not(BaseAtom):
+class Not(Formula):
     val: Any
 
 
@@ -58,10 +69,6 @@ def FreshVar():
     return Var(f"duckegg_x{fresh_counter}")
 
 
-def Vars(xs):
-    return [Var(x) for x in xs.split()]
-
-
 @dataclass(frozen=True)
 class QuasiQuote:
     expr: str
@@ -71,13 +78,35 @@ Q = QuasiQuote
 
 
 @dataclass
-class Atom(BaseAtom):
+class Atom(Formula):
     name: str
     args: List[Any]
 
-    def __repr__(self):
+    def __str__(self):
         args = ",".join(map(repr, self.args))
         return f"{self.name}({args})"
+
+
+@dataclass
+class Proof:
+    conc: Formula
+    subproofs: List[Proof]
+    reason: Any
+
+    def bussproof(self):
+        conc = self.conc
+        reason = self.reason
+        hyps = self.subproofs
+        if len(hyps) == 0:
+            return f"\\RightLabel{{{reason}}} \\AxiomC{{{self.conc}}}"
+        elif len(hyps) == 1:
+            return f"{hyps[0].bussproof()} \\RightLabel{{{reason}}} \\UnaryInfC{{{conc}}}"
+        elif len(hyps) == 2:
+            return f"{hyps[0].bussproof()} {hyps[1].bussproof()} \\RightLabel{{{reason}}}  \\BinaryInfC{{{conc}}}"
+        elif len(hyps) == 3:
+            return f"{hyps[0].bussproof()} {hyps[1].bussproof()} {hyps[2].bussproof()} \\RightLabel{{{reason}}}  \\TrinaryInfC{{{conc}}}"
+        elif len(hyps) >= 3:
+            return f"{hyps[0].bussproof()} {hyps[1].bussproof()} \\AxiomC{{{...}}} \\RightLabel{{{reason}}} \\TrinaryInfC{{{conc}}}"
 
 
 @dataclass
@@ -85,18 +114,24 @@ class Body:
     atoms: List[Atom]
 
     def __and__(self, rhs):
-        if isinstance(rhs, BaseAtom):
+        if isinstance(rhs, Formula):
             return Body(self.atoms + [rhs])
         elif isinstance(rhs, Body):
             return Body(self.atoms + rhs)
         else:
             raise Exception(f"{self} & {rhs} is invalid")
 
+    def __str__(self):
+        return ", ".join(map(str, self.atoms))
+
 
 @dataclass
 class Clause:
     head: Atom
     body: Body
+
+    def __str__(self):
+        return f"{self.head} :- {self.body}."
 
 
 class BaseSolver():

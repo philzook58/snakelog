@@ -84,6 +84,31 @@ def test_unify2():
     s.cur.execute("SELECT * FROM path")
     assert set(s.cur.fetchall()) == {(1, 2), (2, 3), (1, 3)}
 
+
+def test_provenance():
+    s = Solver(debug=False)
+    x, y, z, w = Vars("x y z w")
+    edge = s.Relation("edge", INTEGER, INTEGER)
+    path = s.Relation("path", INTEGER, INTEGER)
+    s.add(edge(1, 2))
+    s.add(edge(2, 3))
+    s.add(path(x, y) <= edge(x, y))
+    s.add(path(x, z) <= edge(x, w) & path(y, z) & (w == y))
+    s.run()
+    s.cur.execute("SELECT * FROM path")
+    assert set(s.cur.fetchall()) == {(1, 2), (2, 3), (1, 3)}
+    s.cur.execute("SELECT * FROM litelog_old_edge")
+    print("litelog old", s.cur.fetchall())
+    s.cur.execute("SELECT * FROM edge")
+    print("litelog edge", s.cur.fetchall())
+    proof = s.provenance(path(1, 3), 10)
+    assert len(proof.subproofs) == 2  # edge, path
+    assert len(proof.subproofs[0].subproofs) == 0  # edge(1,2)
+    assert len(proof.subproofs[1].subproofs) == 1  # path :- edge
+    assert len(proof.subproofs[1].subproofs[0].subproofs) == 0  # edge(2,3)
+    print(proof.bussproof())
+
+
 # todo: test Q functionality
 
 

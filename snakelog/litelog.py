@@ -111,7 +111,7 @@ def construct(arg, varmap, constants):
         return constants.add_constant(arg)
 
 
-def compile_query(body: List[BaseAtom]):
+def compile_query(body: List[Formula]):
     # map from variables to columns where they appear
     # We use WHERE clauses and let SQL do the heavy lifting
     counter = 0
@@ -153,7 +153,7 @@ def compile_query(body: List[BaseAtom]):
             name = rel.name
             args = rel.args
             freshname = fresh(name)
-            froms.append(f"{name} AS {freshname}")
+            froms.append((name, freshname))
 
             for n, arg in enumerate(args):
                 colname = f"{freshname}.x{n}"
@@ -165,7 +165,11 @@ def compile_query(body: List[BaseAtom]):
                 else:
                     varmap[rel.lhs] += [rel.rhs]
             else:
-                varmap[rel.rhs] += [rel.lhs]
+                if isinstance(rel.rhs, Var):
+                    varmap[rel.rhs] += [rel.lhs]
+                else:
+                    # hmm. shouldn't I be using constantmap here?
+                    wheres.append(f"{rel.lhs} = {rel.rhs}")
     formatvarmap = varmap.formatmap()
 
     for c in body:
@@ -197,24 +201,24 @@ def compile_query(body: List[BaseAtom]):
                 print(v, argset)
                 assert False
     '''
+    return varmap, constants, froms, wheres
+
+
+def compile(head: Atom, body: List[Formula], naive=False):
+    assert isinstance(head, Atom)
+
+    varmap, constants, froms, wheres = compile_query(body)
     if len(wheres) > 0:
         wheres = " WHERE " + " AND ".join(wheres)
     else:
         wheres = ""
-    return varmap, constants, froms, wheres
-
-
-def compile(head: Atom, body: List[BaseAtom], naive=False):
-    assert isinstance(head, Atom)
-
-    varmap, constants, froms, wheres = compile_query(body)
-
     # Semi-naive bodies
     selects = ", ".join([construct(arg, varmap, constants)
                         for arg in head.args])
     if naive:
         if len(froms) > 0:
-            froms = " FROM " + ", ".join(froms)
+            froms = " FROM " + \
+                ", ".join([f"{table} AS {row}" for table, row in froms])
         else:
             froms = ""
         return f"INSERT OR IGNORE INTO {new(head.name)} SELECT DISTINCT {selects}{froms}{wheres}", constants
@@ -222,9 +226,8 @@ def compile(head: Atom, body: List[BaseAtom], naive=False):
         stmts = []
         for n in range(len(froms)):
             froms1 = copy(froms)
-            # cheating a little here. froms actually contains "name AS alias"
-            froms1[n] = delta(froms1[n])
-            froms1 = ", ".join(froms1)
+            froms1[n] = delta(froms1[n][0]), froms1[n][1]
+            froms1 = ", ".join([f"{table} AS {row}" for table, row in froms1])
             stmts.append(
                 (f"INSERT OR IGNORE INTO {new(head.name)} SELECT DISTINCT {selects} FROM {froms1}{wheres} ", constants))
         return stmts
@@ -278,28 +281,54 @@ class Solver(BaseSolver):
             assert self.rels[name] == types
         return lambda *args: Atom(name, args)
 
-    '''
     def provenance(self, fact, timestamp):
-        def match_head():
-            for rule in self.rules:
-                if rule.head.name != fact.name:
-                    continue
-                query = [Eq(a, b) for a, b in zip(
-                    rule.head.args, fact.args)] + rule.body
-                varmap, constants, froms, wheres = compile_query(query)
-                froms = [f"datalite_old_{frum}"for frum in froms]
-                wheres.append(f"{row.timestamp} < :timestamp")
-                constants["timestamp"] = timestamp
-                f"SELECT {varmap.values()} {froms}{wheres}"
-                res = self.con.fetchone()
-                if res != None:
-                    for rel in body:
-                        match_head(
-                            Atom(rel.name, [res[arg] for arg in rel.args]))
-                    return proof
-            raise BaseException(
-                f"No rules applied to dervation of {fact}, {timestamp}")
-                '''
+        for rulen, (head, body) in enumerate(self.rules):
+            if head.name != fact.name or len(head.args) != len(fact.args):
+                continue
+            query = [Eq(a, b) for a, b in zip(
+                head.args, fact.args)] + body
+            print(query)
+            varmap, constants, froms, wheres = compile_query(query)
+            wheres += [f"{row}.{keyword}_timestamp < :timestamp" for _, row in froms]
+            # This section is repetitive
+            if len(wheres) > 0:
+                wheres = " WHERE " + " AND ".join(wheres)
+            else:
+                wheres = ""
+            constants["timestamp"] = timestamp
+
+            body_atoms = [
+                rel for rel in body if isinstance(rel, Atom)]
+            selects = [arg for rel in body_atoms for arg in rel.args]
+            assert len(body_atoms) == len(froms)
+            assert all([r1.name == table for r1, (table, _)
+                        in zip(body_atoms, froms)])
+            selects = [construct(arg, varmap, constants) for arg in selects]
+            timestampind = len(selects)
+            selects += [f"{row}.{keyword}_timestamp" for _, row in froms]
+            selects = ", ".join(selects)
+            if selects == "":
+                selects = " * "
+            if len(froms) > 0:
+                froms = " FROM " + \
+                    ", ".join(
+                        [f"{old(table)} AS {row}" for table, row in froms])
+            else:
+                froms = " FROM (VALUES (42)) "
+            # order by sum(timestamps) limit 1
+            self.execute(f"SELECT {selects} {froms} {wheres}", constants)
+            res = self.cur.fetchone()
+            if res != None:
+                timestamps = res[timestampind:]
+                subproofs = []
+                for rel, timestamp in zip(body, timestamps):
+                    nargs = len(rel.args)
+                    q = Atom(rel.name, res[:nargs])
+                    res = res[nargs:]
+                    subproofs.append(self.provenance(q, timestamp))
+                return Proof(fact, subproofs, rulen)
+        raise BaseException(
+            f"No rules applied to derivation of {fact}, {timestamp}")
 
     def stratify(self):
         G = nx.DiGraph()
@@ -342,6 +371,8 @@ class Solver(BaseSolver):
                     f"INSERT OR IGNORE INTO {delta(name)} SELECT DISTINCT * FROM {new(name)}")
                 self.execute(
                     f"INSERT OR IGNORE INTO {name} SELECT DISTINCT * FROM {new(name)}")
+                self.execute(
+                    f"INSERT OR IGNORE INTO {old(name)} SELECT *, ? FROM {new(name)}", (timestamp,))
                 self.execute(
                     f"DELETE FROM {new(name)}")
             # Seminaive loop
