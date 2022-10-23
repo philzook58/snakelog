@@ -1,6 +1,11 @@
 # A Log is the Same Shape as a Snake
 ### A Datalog Framework For Python
 
+- [docs](https://www.philipzucker.com/snakelog/_build/html/)
+- [Blog post](https://www.philipzucker.com/snakelog-post/)
+
+Example usage:
+
 ```python
 from snakelog.common import *
 from snakelog.litelog import Solver, TEXT
