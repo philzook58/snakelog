@@ -34,6 +34,7 @@
       Proof
       Q
       QuasiQuote
+      Sort
       Term
       Var
    
