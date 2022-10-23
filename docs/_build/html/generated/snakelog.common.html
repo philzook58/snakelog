@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>snakelog.common &mdash; snakelog 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="snakelog.litelog" href="snakelog.litelog.html" />
+    <link rel="prev" title="API" href="../api.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> snakelog
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">snakelog.common</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.common.Atom"><code class="docutils literal notranslate"><span class="pre">Atom</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.common.Body"><code class="docutils literal notranslate"><span class="pre">Body</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.common.Clause"><code class="docutils literal notranslate"><span class="pre">Clause</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.common.Eq"><code class="docutils literal notranslate"><span class="pre">Eq</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.common.Not"><code class="docutils literal notranslate"><span class="pre">Not</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.common.Proof"><code class="docutils literal notranslate"><span class="pre">Proof</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.common.Q"><code class="docutils literal notranslate"><span class="pre">Q</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.common.QuasiQuote"><code class="docutils literal notranslate"><span class="pre">QuasiQuote</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.common.Term"><code class="docutils literal notranslate"><span class="pre">Term</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.common.Var"><code class="docutils literal notranslate"><span class="pre">Var</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="snakelog.litelog.html">snakelog.litelog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="snakelog.html">snakelog</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">snakelog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../api.html">API</a> &raquo;</li>
+      <li>snakelog.common</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/snakelog.common.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-snakelog.common">
+<span id="snakelog-common"></span><h1>snakelog.common<a class="headerlink" href="#module-snakelog.common" title="Permalink to this heading"></a></h1>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FreshVar</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Vars</span></code>(xs)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#snakelog.common.Atom" title="snakelog.common.Atom"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Atom</span></code></a>(name, args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseSolver</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#snakelog.common.Body" title="snakelog.common.Body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Body</span></code></a>(atoms)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#snakelog.common.Clause" title="snakelog.common.Clause"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Clause</span></code></a>(head, body)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#snakelog.common.Eq" title="snakelog.common.Eq"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Eq</span></code></a>(lhs, rhs)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Formula</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#snakelog.common.Not" title="snakelog.common.Not"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Not</span></code></a>(val)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#snakelog.common.Proof" title="snakelog.common.Proof"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Proof</span></code></a>(conc, subproofs, reason)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#snakelog.common.Q" title="snakelog.common.Q"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Q</span></code></a></p></td>
+<td><p>alias of <a class="reference internal" href="#snakelog.common.QuasiQuote" title="snakelog.common.QuasiQuote"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuasiQuote</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#snakelog.common.QuasiQuote" title="snakelog.common.QuasiQuote"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QuasiQuote</span></code></a>(expr)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#snakelog.common.Term" title="snakelog.common.Term"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Term</span></code></a>(name, args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#snakelog.common.Var" title="snakelog.common.Var"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Var</span></code></a>(name)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="snakelog.common.Atom">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakelog.common.</span></span><span class="sig-name descname"><span class="pre">Atom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'str'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'List[Any]'</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.common.Atom" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Formula</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snakelog.common.Body">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakelog.common.</span></span><span class="sig-name descname"><span class="pre">Body</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'List[Atom]'</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.common.Body" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snakelog.common.Clause">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakelog.common.</span></span><span class="sig-name descname"><span class="pre">Clause</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">head</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'Atom'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'Body'</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.common.Clause" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snakelog.common.Eq">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakelog.common.</span></span><span class="sig-name descname"><span class="pre">Eq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lhs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'Any'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'Any'</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.common.Eq" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Formula</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snakelog.common.Not">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakelog.common.</span></span><span class="sig-name descname"><span class="pre">Not</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'Any'</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.common.Not" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Formula</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snakelog.common.Proof">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakelog.common.</span></span><span class="sig-name descname"><span class="pre">Proof</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'Formula'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subproofs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'List[Proof]'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reason</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'Any'</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.common.Proof" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakelog.common.Q">
+<span class="sig-prename descclassname"><span class="pre">snakelog.common.</span></span><span class="sig-name descname"><span class="pre">Q</span></span><a class="headerlink" href="#snakelog.common.Q" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <a class="reference internal" href="#snakelog.common.QuasiQuote" title="snakelog.common.QuasiQuote"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuasiQuote</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snakelog.common.QuasiQuote">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakelog.common.</span></span><span class="sig-name descname"><span class="pre">QuasiQuote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'str'</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.common.QuasiQuote" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snakelog.common.Term">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakelog.common.</span></span><span class="sig-name descname"><span class="pre">Term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'str'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'List[Any]'</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.common.Term" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snakelog.common.Var">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakelog.common.</span></span><span class="sig-name descname"><span class="pre">Var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'str'</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.common.Var" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../api.html" class="btn btn-neutral float-left" title="API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="snakelog.litelog.html" class="btn btn-neutral float-right" title="snakelog.litelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Philip Zucker.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

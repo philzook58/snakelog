@@ -1,4 +1,5 @@
 from __future__ import annotations
+from enum import Enum, auto
 from typing import Any, List
 from dataclasses import dataclass
 
@@ -19,6 +20,12 @@ class Var:
 
 def Vars(xs):
     return [Var(x) for x in xs.split()]
+
+
+class Sort(Enum):
+    NUMBER = auto()
+    SYMBOL = auto()
+    TERM = auto()
 
 
 @dataclass(frozen=True)

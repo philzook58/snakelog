@@ -1,5 +1,4 @@
 
-from pprint import pprint
 import subprocess
 import sqlite3
 import tempfile

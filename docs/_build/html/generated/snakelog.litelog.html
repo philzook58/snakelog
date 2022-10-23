@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>snakelog.litelog &mdash; snakelog 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="snakelog" href="snakelog.html" />
+    <link rel="prev" title="snakelog.common" href="snakelog.common.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> snakelog
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="snakelog.common.html">snakelog.common</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">snakelog.litelog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.litelog.ConstantMap"><code class="docutils literal notranslate"><span class="pre">ConstantMap</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#snakelog.litelog.ConstantMap.clear"><code class="docutils literal notranslate"><span class="pre">ConstantMap.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#snakelog.litelog.ConstantMap.copy"><code class="docutils literal notranslate"><span class="pre">ConstantMap.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#snakelog.litelog.ConstantMap.fromkeys"><code class="docutils literal notranslate"><span class="pre">ConstantMap.fromkeys()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#snakelog.litelog.ConstantMap.get"><code class="docutils literal notranslate"><span class="pre">ConstantMap.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#snakelog.litelog.ConstantMap.items"><code class="docutils literal notranslate"><span class="pre">ConstantMap.items()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#snakelog.litelog.ConstantMap.keys"><code class="docutils literal notranslate"><span class="pre">ConstantMap.keys()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#snakelog.litelog.ConstantMap.pop"><code class="docutils literal notranslate"><span class="pre">ConstantMap.pop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#snakelog.litelog.ConstantMap.popitem"><code class="docutils literal notranslate"><span class="pre">ConstantMap.popitem()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#snakelog.litelog.ConstantMap.setdefault"><code class="docutils literal notranslate"><span class="pre">ConstantMap.setdefault()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#snakelog.litelog.ConstantMap.update"><code class="docutils literal notranslate"><span class="pre">ConstantMap.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#snakelog.litelog.ConstantMap.values"><code class="docutils literal notranslate"><span class="pre">ConstantMap.values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.litelog.JSON"><code class="docutils literal notranslate"><span class="pre">JSON</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.litelog.SQL"><code class="docutils literal notranslate"><span class="pre">SQL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.litelog.Solver"><code class="docutils literal notranslate"><span class="pre">Solver</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.litelog.VarMap"><code class="docutils literal notranslate"><span class="pre">VarMap</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.litelog.delta"><code class="docutils literal notranslate"><span class="pre">delta()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snakelog.litelog.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="snakelog.html">snakelog</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">snakelog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../api.html">API</a> &raquo;</li>
+      <li>snakelog.litelog</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/snakelog.litelog.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-snakelog.litelog">
+<span id="snakelog-litelog"></span><h1>snakelog.litelog<a class="headerlink" href="#module-snakelog.litelog" title="Permalink to this heading"></a></h1>
+<p class="rubric">Module Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#snakelog.litelog.JSON" title="snakelog.litelog.JSON"><code class="xref py py-obj docutils literal notranslate"><span class="pre">JSON</span></code></a></p></td>
+<td><p>keyword is prepended to avoid name collision with user given names</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compile</span></code>(head, body[, naive])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compile_query</span></code>(body)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct</span></code>(arg, varmap, constants)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#snakelog.litelog.delta" title="snakelog.litelog.delta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delta</span></code></a>(name)</p></td>
+<td><p>Helpers to derive auxiliary relation names from user relation name</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">new</span></code>(name)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">old</span></code>(name)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#snakelog.litelog.validate" title="snakelog.litelog.validate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate</span></code></a>(name)</p></td>
+<td><p>Validates valid identifiers</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#snakelog.litelog.ConstantMap" title="snakelog.litelog.ConstantMap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConstantMap</span></code></a></p></td>
+<td><p>ConstantMap hold a mapping between named SQL parameters and their pythonic values</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#snakelog.litelog.SQL" title="snakelog.litelog.SQL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SQL</span></code></a>(expr)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#snakelog.litelog.Solver" title="snakelog.litelog.Solver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Solver</span></code></a>([debug, database])</p></td>
+<td><p>SQLite based datalog solver</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#snakelog.litelog.VarMap" title="snakelog.litelog.VarMap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VarMap</span></code></a>()</p></td>
+<td><p>Union Find Dict <a class="reference external" href="https://www.philipzucker.com/union-find-dict/">https://www.philipzucker.com/union-find-dict/</a> self.data holds either Var or list as value.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="snakelog.litelog.ConstantMap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakelog.litelog.</span></span><span class="sig-name descname"><span class="pre">ConstantMap</span></span><a class="headerlink" href="#snakelog.litelog.ConstantMap" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+<p>ConstantMap hold a mapping between named SQL parameters and their pythonic values</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="snakelog.litelog.ConstantMap.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None.</span>&#160; <span class="pre">Remove</span> <span class="pre">all</span> <span class="pre">items</span> <span class="pre">from</span> <span class="pre">D.</span></span></span><a class="headerlink" href="#snakelog.litelog.ConstantMap.clear" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakelog.litelog.ConstantMap.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">shallow</span> <span class="pre">copy</span> <span class="pre">of</span> <span class="pre">D</span></span></span><a class="headerlink" href="#snakelog.litelog.ConstantMap.copy" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakelog.litelog.ConstantMap.fromkeys">
+<span class="sig-name descname"><span class="pre">fromkeys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.litelog.ConstantMap.fromkeys" title="Permalink to this definition"></a></dt>
+<dd><p>Create a new dictionary with keys from iterable and values set to value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakelog.litelog.ConstantMap.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.litelog.ConstantMap.get" title="Permalink to this definition"></a></dt>
+<dd><p>Return the value for key if key is in the dictionary, else default.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakelog.litelog.ConstantMap.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">items</span></span></span><a class="headerlink" href="#snakelog.litelog.ConstantMap.items" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakelog.litelog.ConstantMap.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">keys</span></span></span><a class="headerlink" href="#snakelog.litelog.ConstantMap.keys" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakelog.litelog.ConstantMap.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">v,</span> <span class="pre">remove</span> <span class="pre">specified</span> <span class="pre">key</span> <span class="pre">and</span> <span class="pre">return</span> <span class="pre">the</span> <span class="pre">corresponding</span> <span class="pre">value.</span></span></span><a class="headerlink" href="#snakelog.litelog.ConstantMap.pop" title="Permalink to this definition"></a></dt>
+<dd><p>If the key is not found, return the default if given; otherwise,
+raise a KeyError.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakelog.litelog.ConstantMap.popitem">
+<span class="sig-name descname"><span class="pre">popitem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.litelog.ConstantMap.popitem" title="Permalink to this definition"></a></dt>
+<dd><p>Remove and return a (key, value) pair as a 2-tuple.</p>
+<p>Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakelog.litelog.ConstantMap.setdefault">
+<span class="sig-name descname"><span class="pre">setdefault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.litelog.ConstantMap.setdefault" title="Permalink to this definition"></a></dt>
+<dd><p>Insert key with a value of default if key is not in the dictionary.</p>
+<p>Return the value for key if key is in the dictionary, else default.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakelog.litelog.ConstantMap.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">E</span></span></em>, <span class="optional">]</span><em class="sig-param"><span class="n"><span class="pre">**F</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None.</span>&#160; <span class="pre">Update</span> <span class="pre">D</span> <span class="pre">from</span> <span class="pre">dict/iterable</span> <span class="pre">E</span> <span class="pre">and</span> <span class="pre">F.</span></span></span><a class="headerlink" href="#snakelog.litelog.ConstantMap.update" title="Permalink to this definition"></a></dt>
+<dd><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k]
+If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
+In either case, this is followed by: for k in F:  D[k] = F[k]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakelog.litelog.ConstantMap.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">an</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">values</span></span></span><a class="headerlink" href="#snakelog.litelog.ConstantMap.values" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="snakelog.litelog.JSON">
+<span class="sig-prename descclassname"><span class="pre">snakelog.litelog.</span></span><span class="sig-name descname"><span class="pre">JSON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'TEXT'</span></em><a class="headerlink" href="#snakelog.litelog.JSON" title="Permalink to this definition"></a></dt>
+<dd><p>keyword is prepended to avoid name collision with user given names</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snakelog.litelog.SQL">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakelog.litelog.</span></span><span class="sig-name descname"><span class="pre">SQL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.litelog.SQL" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snakelog.litelog.Solver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakelog.litelog.</span></span><span class="sig-name descname"><span class="pre">Solver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">':memory:'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.litelog.Solver" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSolver</span></code></p>
+<p>SQLite based datalog solver</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snakelog.litelog.VarMap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakelog.litelog.</span></span><span class="sig-name descname"><span class="pre">VarMap</span></span><a class="headerlink" href="#snakelog.litelog.VarMap" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Union Find Dict <a class="reference external" href="https://www.philipzucker.com/union-find-dict/">https://www.philipzucker.com/union-find-dict/</a>
+self.data holds either Var or list as value.
+If Var, iterate lookup until reach list.
+Values held in dict are merged upon union</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="snakelog.litelog.delta">
+<span class="sig-prename descclassname"><span class="pre">snakelog.litelog.</span></span><span class="sig-name descname"><span class="pre">delta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.litelog.delta" title="Permalink to this definition"></a></dt>
+<dd><p>Helpers to derive auxiliary relation names from user relation name</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="snakelog.litelog.validate">
+<span class="sig-prename descclassname"><span class="pre">snakelog.litelog.</span></span><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#snakelog.litelog.validate" title="Permalink to this definition"></a></dt>
+<dd><p>Validates valid identifiers</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="snakelog.common.html" class="btn btn-neutral float-left" title="snakelog.common" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="snakelog.html" class="btn btn-neutral float-right" title="snakelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Philip Zucker.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

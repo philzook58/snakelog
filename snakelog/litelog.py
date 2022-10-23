@@ -234,6 +234,10 @@ def compile(head: Atom, body: List[Formula], naive=False):
 
 
 class Solver(BaseSolver):
+    '''
+    SQLite based datalog solver
+    '''
+
     def __init__(self, debug=False, database=":memory:"):
         self.con = sqlite3.connect(
             database=database, detect_types=sqlite3.PARSE_DECLTYPES)
@@ -257,7 +261,7 @@ class Solver(BaseSolver):
             end_time = time.time()
             self.stats[stmt] += end_time - start_time
 
-    def Relation(self, name, *types):
+    def Relation(self, name: str, *types):
         assert validate(name) and keyword not in name
         assert all([validate(typ) for typ in types])
         if name not in self.rels:
@@ -281,7 +285,7 @@ class Solver(BaseSolver):
             assert self.rels[name] == types
         return lambda *args: Atom(name, args)
 
-    def provenance(self, fact, timestamp):
+    def provenance(self, fact: Atom, timestamp: int):
         for rulen, (head, body) in enumerate(self.rules):
             if head.name != fact.name or len(head.args) != len(fact.args):
                 continue

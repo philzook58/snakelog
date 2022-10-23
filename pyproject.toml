@@ -12,6 +12,16 @@ networkx = "^2.8.7"
 [tool.poetry.group.test.dependencies]
 pytest = "^6.0.0"
 
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.docs.dependencies]
+sphinx = "^5.3.0"
+sphinx-rtd-theme = "^1.0.0"
+
+[tool.poetry.group.docs]
+optional = true
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
