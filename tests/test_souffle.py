@@ -1,5 +1,11 @@
 from snakelog import *
 from snakelog.souffle import *
+from .progs import progs
+
+
+def test_progs():
+    for prog in progs:
+        prog(SouffleSolver())
 
 
 def test_edge():
@@ -19,8 +25,8 @@ def test_edge():
     assert set(res.fetchall()) == {(1, 2), (2, 3), (1, 3)}
 
 
-def disable_test_list():
-    s = SouffleSolver(output_db="listtest.db")
+def test_list():
+    s = SouffleSolver()
     lists = s.Relation("lists", "term")
     cons = s.Function("Cons", "number", "term")
     nil = s.Function("Nil")()
@@ -31,4 +37,4 @@ def disable_test_list():
 
     res = s.con.execute("SELECT * FROM lists")
     assert set(res.fetchall()) == {
-        ("$Cons(1,$Cons(2,$Nil()))",), ("$Cons(2,$Nil())",), ("$Nil",)}
+        ("$Cons(1, $Cons(2, $Nil))",), ("$Cons(2, $Nil)",), ("$Nil",)}

@@ -22,6 +22,7 @@
       compile
       compile_query
       construct
+      conv_type
       delta
       new
       old

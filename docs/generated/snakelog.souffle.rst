@@ -9,6 +9,13 @@
 
    
    
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      conv_type
+      from_str
+   
    
 
    

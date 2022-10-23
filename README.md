@@ -4,7 +4,16 @@
 - [docs](https://www.philipzucker.com/snakelog/_build/html/)
 - [Blog post](https://www.philipzucker.com/snakelog-post/)
 
-Example usage:
+### Installation
+
+```
+python3 -m pip install snakelog
+```
+
+To use the souffle backend, have `souffle` available on system path <https://souffle-lang.github.io/build>
+
+
+### Example usage
 
 ```python
 from snakelog.common import *

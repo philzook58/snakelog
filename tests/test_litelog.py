@@ -1,6 +1,12 @@
 from snakelog import *
 from snakelog.litelog import *
 import json
+from .progs import progs
+
+
+def test_progs():
+    for prog in progs:
+        prog(Solver())
 
 
 def test_edge():

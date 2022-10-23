@@ -6,8 +6,10 @@ authors = ["Philip Zucker <philzook58@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 networkx = "^2.8.7"
+
+
 
 [tool.poetry.group.test.dependencies]
 pytest = "^6.0.0"
@@ -21,6 +23,15 @@ sphinx-rtd-theme = "^1.0.0"
 
 [tool.poetry.group.docs]
 optional = true
+
+[tool.poetry.group.z3lite.dependencies]
+z3-solver = "^4.11.2.0"
+
+[tool.poetry.group.z3lite]
+optional = true
+
+[tool.poetry.group.egglog.dependencies]
+sexpdata = "^0.0.3"
 
 [build-system]
 requires = ["poetry-core"]

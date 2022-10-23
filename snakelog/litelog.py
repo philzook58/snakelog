@@ -44,6 +44,15 @@ def validate(name):
     return re.fullmatch("[_a-zA-Z][_a-zA-Z0-9]*", name) != None
 
 
+def conv_type(typ):
+    if typ == Sort.NUMBER:
+        return INTEGER
+    elif typ == Sort.SYMBOL:
+        return TEXT
+    else:
+        return typ
+
+
 class VarMap():
     '''
     Union Find Dict https://www.philipzucker.com/union-find-dict/
@@ -263,7 +272,9 @@ class Solver(BaseSolver):
 
     def Relation(self, name: str, *types):
         assert validate(name) and keyword not in name
-        assert all([validate(typ) for typ in types])
+        assert all([validate(typ)
+                   for typ in types if not isinstance(typ, Sort)])
+        types = [conv_type(typ) for typ in types]
         if name not in self.rels:
             self.rels[name] = types
             args = ", ".join(
