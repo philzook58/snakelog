@@ -14,6 +14,13 @@ from .common import *
 class SQL:
     expr: str
 
+@dataclass(frozen=True)
+class StrVal:
+    value: str
+
+    def __str__(self):
+        return f"'{self.value}'"
+
 
 # https://www.sqlite.org/datatype3.html
 INTEGER = "INTEGER"
@@ -151,7 +158,10 @@ def compile_query(body: List[Formula]):
                 match_(f"json_extract({x},'$[{n}]')", v)
         else:
             # Assume constant can be handled by SQLite adapter
+            
             id_ = constants.add_constant(pat)
+            id_ = id_ if str(id_).find(".") >= 0 or str(id_).find("'") >=0 else f"'{x}'"
+            x = x if str(x).find(".") >= 0 or str(x).find("'") >=0 else f"'{x}'" 
             wheres.append(f"{id_} = {x}")
 
     for rel in body:
@@ -178,7 +188,9 @@ def compile_query(body: List[Formula]):
                     varmap[rel.rhs] += [rel.lhs]
                 else:
                     # hmm. shouldn't I be using constantmap here?
-                    wheres.append(f"{rel.lhs} = {rel.rhs}")
+                    lhs = rel.lhs if str(rel.lhs).find(".") >= 0 or str(rel.lhs).find("'") >=0 else f"'{rel.lhs}'" 
+                    rhs = rel.rhs if str(rel.rhs).find(".") >= 0 or str(rel.rhs).find("'") >=0 else f"'{rel.rhs}'" 
+                    wheres.append(f"{lhs} = {rhs}")
     formatvarmap = varmap.formatmap()
 
     for c in body:
@@ -196,7 +208,9 @@ def compile_query(body: List[Formula]):
     for argset in varmap.values():
         for arg in argset:
             if argset[0] != arg:
-                wheres.append(f"{argset[0]} = {arg}")
+                lhs = argset[0] if str(argset[0]).find(".") >= 0 or str(argset[0]).find("'") >=0 else f"'{argset[0]}'" 
+                rhs = arg if str(arg).find(".") >= 0 or str(arg).find("'") >=0 else f"'{arg}'" 
+                wheres.append(f"{lhs} = {rhs}")
 
     '''
     for v, argset in varmap.items():
@@ -257,7 +271,10 @@ class Solver(BaseSolver):
         self.stats = defaultdict(int)
 
     def execute(self, stmt, *args):
+        def process(arg):
+            return {k: (str(v)[1:-1] if isinstance(v, StrVal) else v) for k, v in arg.items()}
 
+        args = tuple(process(arg) if isinstance(arg, dict) else arg for arg in args)
         if self.debug:
             print(stmt, args)
             start_time = time.time()
@@ -294,7 +311,7 @@ class Solver(BaseSolver):
                 f"CREATE TABLE {old(name)}({args}, PRIMARY KEY ({bareargs})) WITHOUT ROWID")
         else:
             assert self.rels[name] == types
-        return lambda *args: Atom(name, args)
+        return lambda *args: Atom(name, [StrVal(arg) if isinstance(arg, str) else arg for arg in args])
 
     def provenance(self, fact: Atom, timestamp: int):
         for rulen, (head, body) in enumerate(self.rules):
@@ -319,6 +336,7 @@ class Solver(BaseSolver):
             assert all([r1.name == table for r1, (table, _)
                         in zip(body_atoms, froms)])
             selects = [construct(arg, varmap, constants) for arg in selects]
+            selects = [s if max(s.find("'"),s.find("."))>=0 else f"'{s}'" for s in selects]
             timestampind = len(selects)
             selects += [f"{row}.{keyword}_timestamp" for _, row in froms]
             selects = ", ".join(selects)

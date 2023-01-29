@@ -114,6 +114,33 @@ def test_provenance():
     assert len(proof.subproofs[1].subproofs[0].subproofs) == 0  # edge(2,3)
     print(proof.bussproof())
 
+def test_provenance_text():
+    """
+    replicates test_provenance, but with text values instead of ints
+    """
+    s = Solver(debug=False)
+    x, y, z, w = Vars("x y z w")
+    edge = s.Relation("edge", TEXT, TEXT)
+    path = s.Relation("path", TEXT, TEXT)
+    s.add(edge("a", "b"))
+    s.add(edge("b", "c"))
+    s.add(path(x, y) <= edge(x, y))
+    s.add(path(x, z) <= edge(x, w) & path(y, z) & (w == y))
+    s.run()
+    s.cur.execute("SELECT * FROM path")
+    assert set(s.cur.fetchall()) == {("a", "b"), ("b", "c"), ("a", "c")}
+    s.cur.execute("SELECT * FROM litelog_old_edge")
+    print("litelog old", s.cur.fetchall())
+    s.cur.execute("SELECT * FROM edge")
+    print("litelog edge", s.cur.fetchall())
+    proof = s.provenance(path("a", "c"), 10)
+    assert len(proof.subproofs) == 2  # edge, path
+    assert len(proof.subproofs[0].subproofs) == 0  # edge("a","b")
+    assert len(proof.subproofs[1].subproofs) == 1  # path :- edge
+    assert len(proof.subproofs[1].subproofs[0].subproofs) == 0  # edge("b","c")
+    print(proof.bussproof())
+
+
 
 # todo: test Q functionality
 
